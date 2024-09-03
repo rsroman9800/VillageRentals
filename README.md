@@ -40,29 +40,31 @@ Razor Pages
 
 **Installation**
 
-Clone the Repository:
+1. Clone the Repository:
 
-bash
-Copy code
-git clone https://github.com/yourusername/village-rentals.git
-cd village-rentals
+  bash
+  Copy code
+  git clone https://github.com/yourusername/village-rentals.git
+  cd village-rentals
 
-Open the Project:
+2. Open the Project:
 
-Open the solution file (.sln) in Visual Studio.
+  Open the solution file (.sln) in Visual Studio.
 
-Build the Project:
+3. Build the Project:
 
-Restore NuGet packages and build the solution.
+  Restore NuGet packages and build the solution.
 
-Run the Application:
+4. Run the Application:
 
-Set the desired startup project and run the application using Visual Studio's built-in IIS Express or another web server.
+  Set the desired startup project and run the application using Visual Studio's built-in IIS Express or another web server.
 
 **Usage**
+
 Use the web interface to manage equipment, customers, and rental transactions.
 Add and remove items as needed, with built-in validation to ensure data integrity.
 View detailed lists of equipment, customers, and rental transactions.
 
 **Contributing**
+
 Contributions are welcome! Please fork the repository and submit a pull request with your changes.
