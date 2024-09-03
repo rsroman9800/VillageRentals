@@ -1,12 +1,15 @@
 **Overview**
+
 The Village Rentals Management System is designed to simplify the management of equipment rentals and customer interactions. The system allows for the efficient management of equipment, customers, and rental transactions, ensuring a smooth operation for rental businesses.
 
 **Key Features**
+
 Equipment Management: Add, remove, and view rental equipment.
 Customer Management: Register and manage customer information.
 Rental Management: Create and manage rental transactions, including the selection of rental dates and associated equipment.
 
 **Project Structure**
+
 Core Classes
 - CustomerInformation: Represents a customer in the system with properties such as CustomerId, LastName, FirstName, PhoneNumber, and Email. This class is used to store and manage customer data.
 - RentalEquipment: Represents a piece of equipment available for rent. It includes properties like EquipmentId, CategoryId, Name, Description, and DailyRate.
@@ -36,22 +39,23 @@ Razor Pages
   - Display Rentals: Lists all rental transactions recorded in the system.
 
 **Installation**
-1. Clone the Repository:
+
+Clone the Repository:
 
 bash
 Copy code
 git clone https://github.com/yourusername/village-rentals.git
 cd village-rentals
 
-2. Open the Project:
+Open the Project:
 
 Open the solution file (.sln) in Visual Studio.
 
-3. Build the Project:
+Build the Project:
 
 Restore NuGet packages and build the solution.
 
-4. Run the Application:
+Run the Application:
 
 Set the desired startup project and run the application using Visual Studio's built-in IIS Express or another web server.
 
