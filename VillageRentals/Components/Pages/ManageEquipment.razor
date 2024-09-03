@@ -1,0 +1,211 @@
+﻿@page "/manageequipment"
+@using VillageRentals.Data
+
+<!--
+    Author: Roman Sorokin
+    Date: August 10, 2024
+
+    Inputs:
+        - Equipment ID (Text input for adding and removing equipment)
+        - Category ID (Dropdown for selecting the equipment category)
+        - Name (Text input for the name of the equipment)
+        - Description (Text area for describing the equipment)
+        - Daily Rate (Text input for the daily rental rate)
+        - Remove Equipment ID (Text input for specifying the equipment ID to remove)
+
+    Processing:
+        - AddEquipment: Takes the inputs from the "Add New Equipment" section, creates a new equipment record, and adds it to the system.
+        - RemoveEquipment: Checks if the specified equipment ID exists and removes it from the system if it does.
+        - DisplayEquipment: Displays a list of all the equipment available in the system.
+
+    Outputs:
+        - Success or error messages indicating the result of adding or removing equipment.
+        - A table listing all the equipment details when the "Display Equipment" button is clicked.
+-->
+
+<div class="main-content">
+    <div class="container">
+
+        <!-- Add New Equipment Section -->
+        <h3>Add New Equipment</h3>
+        <div class="add-section">
+            <div class="input-group">
+                <label for="equipment_id">Equipment ID</label>
+                <input type="text" id="equipment_id" placeholder="Enter 3-digit Equipment ID" @bind="EquipmentId" />
+            </div>
+            <div class="input-group">
+                <label for="category_id">Category ID</label>
+                <select id="category_id" @bind="CategoryId">
+                    <option disabled selected value="">Select a category</option>
+                    @foreach (var category in categories)
+                    {
+                        <option value="@category.Key">@category.Key - @category.Value</option>
+                    }
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Enter Equipment Name" @bind="Name" />
+            </div>
+            <div class="input-group">
+                <label for="description">Description</label>
+                <textarea id="description" placeholder="Enter Equipment Description" @bind="Description" rows="4" cols="50"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="daily_rate">Daily Rate</label>
+                <input type="text" id="daily_rate" placeholder="Enter daily rate in dollars" @bind="DailyRate" />
+            </div>
+            <div class="input-group">
+                <button type="button" class="btn btn-success" @onclick="AddEquipment">Add Equipment</button>
+            </div>
+            @if (!string.IsNullOrEmpty(successMessageAdd))
+            {
+                <div class="alert alert-success">@successMessageAdd</div>
+            }
+            @if (!string.IsNullOrEmpty(errorMessageAdd))
+            {
+                <div class="alert alert-danger">@errorMessageAdd</div>
+            }
+        </div>
+
+        <!-- Remove Equipment Section -->
+        <h3>Remove Equipment</h3>
+        <div class="delete-section">
+            <div class="input-group">
+                <label for="equipment_id">Equipment ID</label>
+                <input type="text" id="equipment_id" placeholder="Enter 3-digit Equipment ID" @bind="RemoveEquipmentId" />
+            </div>
+            <div class="input-group">
+                <button type="button" class="btn btn-danger" @onclick="RemoveEquipment"> Remove Equipment</button>
+            </div>
+            @if (!string.IsNullOrEmpty(successMessageRemove))
+            {
+                <div class="alert alert-success">@successMessageRemove</div>
+            }
+            @if (!string.IsNullOrEmpty(errorMessageRemove))
+            {
+                <div class="alert alert-danger">@errorMessageRemove</div>
+            }
+        </div>
+
+        <!-- Equipment List Section -->
+        <h3>Equipment List</h3>
+        <div class="equipment-setion">
+        <div class="input-group">
+            <button type="button" class="btn btn-secondary" @onclick="DisplayEquipment">Display Equipment</button>
+        </div>
+        <div id="rental-equipment">
+            @if (showEquipment)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Equipment ID</th>
+                            <th>Category ID</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Daily Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Equipment)
+                        {
+                            <tr>
+                                <td>@item.EquipmentId</td>
+                                <td>@item.CategoryId</td>
+                                <td>@item.Name</td>
+                                <td>@item.Description</td>
+                                <td>@string.Format("${0:0.00}", item.DailyRate)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    string EquipmentId;
+    string CategoryId;
+    string Name;
+    string Description;
+    string DailyRate;
+    List<RentalEquipment> Equipment;
+    bool showEquipment = false;
+
+    string successMessageAdd;
+    string errorMessageAdd;
+
+    string successMessageRemove;
+    string errorMessageRemove;
+    string RemoveEquipmentId;
+
+    Dictionary<string, string> categories;
+    CategoryManager categoryManager;
+    EquipmentManager equipmentManager;
+
+    protected override async Task OnInitializedAsync()
+    {
+        categoryManager = new CategoryManager();
+        equipmentManager = new EquipmentManager();
+        categories = categoryManager.GetAllCategories();
+    }
+
+    private void AddEquipment()
+    {
+
+        try
+        {
+            var newEquipment = new RentalEquipment // Create a new equipment object with the input values
+                {
+                    EquipmentId = int.Parse(EquipmentId),
+                    CategoryId = int.Parse(CategoryId),
+                    Name = Name,
+                    Description = Description,
+                    DailyRate = float.Parse(DailyRate)
+                };
+            equipmentManager.addEquipment(newEquipment); // Add the new equipment to the system
+            successMessageAdd = $"Equipment with ID {EquipmentId} has been added."; // Display success message
+            errorMessageAdd = string.Empty;
+        }
+        catch (Exception ex)
+        {
+            errorMessageAdd = $"Please enter all fields."; // Display error message
+            successMessageAdd = string.Empty;
+        }
+    }
+
+    private void RemoveEquipment()
+    {
+        try
+        {
+            int equipmentId = int.Parse(RemoveEquipmentId);
+            var equipment = equipmentManager.getEquipmentById(equipmentId);
+
+            if (equipment != null) // Check if the equipment ID exists and proceed with deleting it if it does
+            {
+                equipmentManager.deleteEquipment(equipmentId);
+                successMessageRemove = $"Equipment with ID {RemoveEquipmentId} has been removed.";
+                errorMessageRemove = string.Empty;
+            }
+            else // Display an error message if the equipment ID does not exist
+            {
+                errorMessageRemove = $"Equipment with ID {RemoveEquipmentId} does not exist.";
+                successMessageRemove = string.Empty;
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessageRemove = $"An error occurre {ex.Message}"; // Display error message
+            successMessageRemove = string.Empty;
+        }
+    }
+
+    private void DisplayEquipment()
+    {
+        Equipment = equipmentManager.populateEquipment(); // Get all the equipment details from the system
+        showEquipment = true;
+    }
+}

@@ -1,0 +1,45 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\cpsy200\\prototype\\VillageRentals\\obj\\Debug\\net8.0-windows10.0.19041.0\\win10-x64\\scopedcss\\bundle\\VillageRentals.styles.css",
+      "PackagePath": "staticwebassets\\VillageRentals.styles.css"
+    },
+    {
+      "Id": "C:\\cpsy200\\prototype\\VillageRentals\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "C:\\cpsy200\\prototype\\VillageRentals\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\cpsy200\\prototype\\VillageRentals\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\cpsy200\\prototype\\VillageRentals\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "C:\\cpsy200\\prototype\\VillageRentals\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-windows10.0.19041.0\\win10-x64\\staticwebassets\\msbuild.VillageRentals.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-windows10.0.19041.0\\win10-x64\\staticwebassets\\msbuild.build.VillageRentals.props",
+      "PackagePath": "build\\VillageRentals.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-windows10.0.19041.0\\win10-x64\\staticwebassets\\msbuild.buildMultiTargeting.VillageRentals.props",
+      "PackagePath": "buildMultiTargeting\\VillageRentals.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-windows10.0.19041.0\\win10-x64\\staticwebassets\\msbuild.buildTransitive.VillageRentals.props",
+      "PackagePath": "buildTransitive\\VillageRentals.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

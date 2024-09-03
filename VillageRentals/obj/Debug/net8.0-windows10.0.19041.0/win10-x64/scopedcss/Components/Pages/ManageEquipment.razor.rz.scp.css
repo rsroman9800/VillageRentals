@@ -1,0 +1,112 @@
+body[b-mr8sjkrhjl] {
+    font-family: Arial, sans-serif;
+    display: flex;
+    margin: 0;
+    height: 100vh;
+}
+
+.main-content[b-mr8sjkrhjl] {
+    flex: 1;
+    padding: 20px;
+    background-color: #ecf0f1;
+    box-sizing: border-box;
+}
+
+.container[b-mr8sjkrhjl] {
+    max-width: 1500px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+h1[b-mr8sjkrhjl], h2[b-mr8sjkrhjl], h3[b-mr8sjkrhjl] {
+    text-align: left;
+    font-weight: bold;
+}
+
+.input-group[b-mr8sjkrhjl] {
+    flex: 1 1 calc(33.33% - 20px);
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+textarea[b-mr8sjkrhjl] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 38px;
+    width: 100%;
+    box-sizing: border-box;
+    resize: none;
+}
+
+label[b-mr8sjkrhjl] {
+    margin-bottom: 5px;
+}
+
+input[b-mr8sjkrhjl], select[b-mr8sjkrhjl] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 38px;
+    text-align: left;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.add-section[b-mr8sjkrhjl] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+    .add-section .btn[b-mr8sjkrhjl] {
+        width: 200px;
+        margin-top: 28px;
+    }
+
+.delete-section[b-mr8sjkrhjl] {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+    
+    .delete-section .input-group[b-mr8sjkrhjl] {
+        width: calc(33.33% - 20px);
+        margin: 0;
+    }
+
+    .delete-section .btn[b-mr8sjkrhjl] {
+        width: 200px;
+        margin-top: 28px;
+    }
+
+.equipment-section[b-mr8sjkrhjl] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+    .equipment-setion .btn[b-mr8sjkrhjl] {
+        width: 200px;
+    }
+
+#rental-equipment[b-mr8sjkrhjl] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+}

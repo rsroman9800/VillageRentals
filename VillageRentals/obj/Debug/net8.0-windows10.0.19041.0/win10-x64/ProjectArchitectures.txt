@@ -1,0 +1,1 @@
+C:\cpsy200\prototype\VillageRentals\VillageRentals.csproj;x64

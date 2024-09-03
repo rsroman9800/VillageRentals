@@ -1,0 +1,117 @@
+﻿@page "/managerental"
+@using VillageRentals.Data
+
+<!--
+    Author: Roman Sorokin
+    Date: August 10, 2024
+
+    Inputs:
+        - Rental ID (Text input for entering a 4-digit Rental ID)
+        - Current Date (Automatically filled, non-editable text field showing the current date)
+        - Customer ID (Text input for entering a 4-digit Customer ID)
+        - Equipment ID (Text input for entering a 3-digit Equipment ID)
+        - Rental Date (Date input for selecting the rental start date)
+        - Return Date (Date input for selecting the rental return date)
+        - Cost (Text input for entering the rental cost)
+
+    Processing:
+        - CreateRental: Takes the inputs from the "Create Rental" section, creates a new rental record, and adds it to the system.
+
+    Outputs:
+        - Success or error messages indicating the result of creating a rental.
+-->
+
+<div class="main-content">
+    <div class="container">
+
+        <!--Create Rental Section-->
+        <h3>Create Rental</h3>
+        <div class="add-section">
+            <div class="input-group">
+                <label for="rental_id">Rental ID</label>
+                <input type="text" id="rental_id" placeholder="Enter 4-digit Rental ID" @bind="RentalId"/>
+            </div>
+            <div class="input-group">
+                <label for="current_date">Current Date</label>
+                <input type="text" id="current_date" value="@CurrentDate" readonly />
+            </div>
+            <div class="input-group">
+                <label for="customer_id">Customer ID</label>
+                <input type="text" id="customer_id" placeholder="Enter 4-digit Customer ID" @bind="CustomerId" />
+            </div>
+            <div class="input-group">
+                <label for="equipment_id">Equipment ID</label>
+                <input type="text" id="equipment_id" placeholder="Enter 3-digit Equipment ID" @bind="EquipmentId" />
+            </div>
+            <div class="input-group">
+                <label for="rental_date">Rental Date</label>
+                <input type="date" id="rental_date" value="@RentalDate" min="@CurrentDate" max="2025-12-31" />
+            </div>
+            <div class="input-group">
+                <label for="return_date">Return Date</label>
+                <input type="date" id="return_date" value="@ReturnDate" min="@CurrentDate" max="2025-12-31" />
+            </div>
+            <div class="input-group">
+                <label for="cost">Cost</label>
+                <input type="text" id="cost" placeholder="Enter rental cost" @bind="Cost" />
+            </div>
+            <div class="input-group">
+                <button type="button" class="btn btn-success" @onclick="CreateRental">Create Rental</button>
+            </div>
+            @if (!string.IsNullOrEmpty(successMessage))
+            {
+                <div class="alert alert-success">@successMessage</div>
+            }
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="alert alert-danger">@errorMessage</div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    string RentalId;
+    string CurrentDate { get; set; } = DateTime.Now.ToString("yyyy-MM-dd");
+    string CustomerId;
+    string EquipmentId;
+    string RentalDate { get; set; } = DateTime.Now.ToString("yyyy-MM-dd");
+    string ReturnDate { get; set; } = DateTime.Now.ToString("yyyy-MM-dd");
+    string Cost;
+    List <RentalInformation> rentals;
+    bool showRental = false;
+    string successMessage;
+    string errorMessage;
+
+    RentalManager rentalManager;
+
+    protected override void OnInitialized()
+    {
+        rentalManager = new RentalManager(); // Create a new instance of the RentalManager class
+    }
+
+    private void CreateRental()
+    {
+        try
+        {
+            RentalInformation rental = new RentalInformation // Creates a new object of the RentalInformation class
+                {
+                    RentalId = int.Parse(RentalId),
+                    Date = CurrentDate,
+                    CustomerId = int.Parse(CustomerId),
+                    EquipmentId = int.Parse(EquipmentId),
+                    RentalDate = RentalDate,
+                    ReturnDate = ReturnDate,
+                    Cost = float.Parse(Cost)
+                };
+            rentalManager.addRental(rental); // Use addRental method to add it to the rental information list
+            successMessage = $"Rental with ID {RentalId} has been created."; // Print success message
+            errorMessage = string.Empty;
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Please enter all fields."; // Print error message
+            successMessage = string.Empty;
+        }
+    }
+}

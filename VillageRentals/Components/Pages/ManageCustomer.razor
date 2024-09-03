@@ -1,0 +1,160 @@
+﻿@page "/managecustomer"
+@using VillageRentals.Data
+
+
+<!--
+    Author: Roman Sorokin
+    Date: August 10, 2024
+
+    Inputs:
+        - Customer ID (Text input for entering a 4-digit Customer ID)
+        - Last Name (Text input for entering the customer's last name)
+        - First Name (Text input for entering the customer's first name)
+        - Phone Number (Text input for entering a 10-digit phone number)
+        - Email (Text input for entering the customer's email address)
+
+    Processing:
+        - AddCustomer: Takes the inputs from the "Add New Customer" section, creates a new customer record, and adds it to the system.
+        - DisplayCustomer: Retrieves and displays a list of all customers stored in the system.
+
+    Outputs:
+        - Success or error messages indicating the result of adding a customer.
+        - A table listing all customers' details when the "Display Customers" button is clicked.
+-->
+
+<div class="main-content">
+    <div class="container">
+
+        <!--Add New Customer Section-->
+        <h3>Add New Customer</h3>
+        <div class="add-section">
+            <div class="input-group">
+                <label for="customer_id">Customer ID</label>
+                <input type="text" id="customer_id" placeholder="Enter 4-digit Customer ID" @bind="CustomerId"/>
+            </div>
+            <div class="input-group">
+                <label for="last_name">Last Name</label>
+                <input type="text" id="last_name" placeholder="Enter customer's last name" @bind="LastName"/>
+            </div>
+            <div class="input-group">
+                <label for="first_name">First Name</label>
+                <input type="text" id="first_name" placeholder="Enter customer's first name" @bind="FirstName"/>
+            </div>
+            <div class="input-group">
+                <label for="phone">Contact Phone</label>
+                <input type="text" id="phone" placeholder="Enter 10-digit phone number" @bind="PhoneNumber"/>
+            </div>
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="text" id="email" placeholder="Enter customer's email address" @bind="Email"/>
+            </div>
+            <div class="input-group">
+                <button type="button" class="btn btn-success" @onclick="AddCustomer">Add Customer</button>
+            </div>
+            @if (!string.IsNullOrEmpty(successMessage))
+            {
+                <div class="alert alert-success">@successMessage</div>
+            }
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="alert alert-danger">@errorMessage</div>
+            }
+        </div>
+
+        <!--Display Customer Section-->
+        <h3>Display Customers</h3>
+        <div class="display-section">
+            <div class="input-group">
+                <button type="button" class="btn btn-secondary" @onclick="DisplayCustomer">Display Customers</button>
+            </div>
+            <div id="rental-customer">
+                @if (showCustomer)
+                {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Customer ID</th>
+                                <th>Last Name</th>
+                                <th>First Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var customer in customers)
+                            {
+                                <tr>
+                                    <td>@customer.CustomerId</td>
+                                    <td>@customer.LastName</td>
+                                    <td>@customer.FirstName</td>
+                                    <td>@customer.PhoneNumber</td>
+                                    <td>@customer.Email</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@code {
+    string CustomerId;
+    string LastName;
+    string FirstName;
+    string PhoneNumber;
+    string Email;
+    List<CustomerInformation> customers;
+    bool showCustomer = false;
+    string errorMessage;
+    string successMessage;
+
+    ClientManager clientManager;
+
+    protected override void OnInitialized()
+    {
+        clientManager = new ClientManager(); // Initialize the client manager
+    }
+
+    private void AddCustomer()
+    {
+        // Check if any of the fields are empty
+        if (string.IsNullOrWhiteSpace(CustomerId) ||
+            string.IsNullOrWhiteSpace(LastName) ||
+            string.IsNullOrWhiteSpace(FirstName) ||
+            string.IsNullOrWhiteSpace(PhoneNumber) ||
+            string.IsNullOrWhiteSpace(Email))
+        {
+            errorMessage = "Please enter all fields.";
+            successMessage = string.Empty;
+            return;
+        }
+
+        try
+        {
+            var customer = new CustomerInformation
+                {
+                    CustomerId = int.Parse(CustomerId),
+                    LastName = LastName,
+                    FirstName = FirstName,
+                    PhoneNumber = PhoneNumber,
+                    Email = Email
+                };
+            clientManager.addCustomer(customer); // Add the new customer to the system
+            successMessage = $"Customer with ID {CustomerId} has been added."; // Display success message
+            errorMessage = string.Empty;
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Please enter all fields."; // Display error message
+            successMessage = string.Empty;
+        }
+    }
+
+    private void DisplayCustomer()
+    {
+        customers = clientManager.populateCustomers(); // Retrieve all customers from the system
+        showCustomer = true;
+    }
+
+}
